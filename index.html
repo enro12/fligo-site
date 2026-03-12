@@ -337,8 +337,8 @@ footer { background:#0f0f1c; border-top:1px solid rgba(212,175,55,0.1); padding:
     <div id="adminLogin">
       <div class="admin-login">
         <h3>🔐 Accès Admin</h3>
-        <input type="password" id="adminMdp" placeholder="Mot de passe" onkeydown="if(event.key==='Enter')loginAdmin()">
-        <button onclick="loginAdmin()">Entrer</button>
+        <input type="password" id="adminMdp" placeholder="Mot de passe" inputmode="text">
+        <button type="button" onclick="loginAdmin()">Entrer ✓</button>
         <div class="admin-err" id="adminErr"></div>
       </div>
     </div>
@@ -475,12 +475,19 @@ db.collection(COLS.membres).orderBy('date','asc').onSnapshot(snap=>{
 function ouvrirAdmin(){ document.getElementById('adminOverlay').classList.add('open'); if(adminOk) chargerListesAdmin(); }
 function fermerAdmin(){ document.getElementById('adminOverlay').classList.remove('open'); }
 function loginAdmin(){
-  if(document.getElementById('adminMdp').value===ADMIN_MDP){
-    adminOk=true;
-    document.getElementById('adminLogin').style.display='none';
-    document.getElementById('adminContent').style.display='block';
+  var mdp = document.getElementById('adminMdp').value;
+  var errEl = document.getElementById('adminErr');
+  errEl.textContent = '';
+  if(!mdp){ errEl.textContent='⚠️ Entrez le mot de passe.'; return; }
+  if(mdp === ADMIN_MDP){
+    adminOk = true;
+    document.getElementById('adminLogin').style.display = 'none';
+    document.getElementById('adminContent').style.display = 'block';
     chargerListesAdmin();
-  } else { document.getElementById('adminErr').textContent='❌ Mot de passe incorrect'; }
+  } else {
+    errEl.textContent = '❌ Mot de passe incorrect';
+    document.getElementById('adminMdp').value = '';
+  }
 }
 function adminTab(btn, name){
   document.querySelectorAll('.admin-tab').forEach(t=>t.classList.remove('active'));
