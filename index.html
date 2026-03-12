@@ -29,6 +29,10 @@ nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;justify-content
 .hero-stats{display:flex;gap:40px;margin-top:50px;flex-wrap:wrap;justify-content:center}
 .stat-num{font-size:38px;font-weight:900;color:#D4AF37;text-align:center}
 .stat-label{font-size:11px;color:#666;text-align:center;letter-spacing:2px;margin-top:4px}
+/* Hero logo zone */
+.hero-logo-wrap{position:relative;display:inline-block;margin-bottom:16px}
+.hero-logo-img{width:120px;height:120px;border-radius:50%;object-fit:cover;border:3px solid #D4AF37;display:none}
+.hero-logo-default{font-size:clamp(52px,12vw,100px);font-weight:900;line-height:1}
 section{padding:80px 24px}
 .container{max-width:1000px;margin:0 auto}
 .sep{width:100%;height:1px;background:linear-gradient(90deg,transparent,rgba(212,175,55,0.3),transparent)}
@@ -46,7 +50,7 @@ section{padding:80px 24px}
 .annonces-list{display:flex;flex-direction:column;gap:14px;margin-top:32px}
 .annonce-card{background:rgba(255,255,255,0.02);border:1px solid rgba(212,175,55,0.1);border-radius:16px;padding:20px 24px}
 .annonce-titre{font-size:18px;font-weight:700;color:#D4AF37;margin-bottom:8px}
-.annonce-contenu{font-size:15px;color:#bbb;line-height:1.7;margin-bottom:10px}
+.annonce-contenu{font-size:15px;color:#bbb;line-height:1.7;margin-bottom:10px;white-space:pre-line}
 .annonce-date{font-size:11px;color:#555}
 .empty-msg{color:#555;font-style:italic;text-align:center;padding:40px;border:1px dashed rgba(212,175,55,0.1);border-radius:16px}
 #galerie{background:#0f0f1c}
@@ -54,8 +58,7 @@ section{padding:80px 24px}
 .gitem{border-radius:16px;overflow:hidden;aspect-ratio:1;position:relative;background:rgba(212,175,55,0.04);border:1px solid rgba(212,175,55,0.1)}
 .gitem img{width:100%;height:100%;object-fit:cover}
 .gitem-ph{display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;gap:8px}
-.gi{font-size:36px}
-.gl{font-size:10px;color:#D4AF37;letter-spacing:2px;text-transform:uppercase}
+.gi{font-size:36px}.gl{font-size:10px;color:#D4AF37;letter-spacing:2px;text-transform:uppercase}
 .gcap{position:absolute;bottom:0;left:0;right:0;background:rgba(0,0,0,0.75);padding:8px 12px;font-size:12px;color:#fff}
 .gitem-video{border-radius:16px;overflow:hidden;position:relative;background:#000;border:1px solid rgba(212,175,55,0.1)}
 .gitem-video iframe{width:100%;height:100%;display:block;border:none}
@@ -87,8 +90,7 @@ section{padding:80px 24px}
 .citems{display:flex;flex-direction:column;gap:12px}
 .citem{display:flex;align-items:center;gap:14px;padding:14px 18px;background:rgba(212,175,55,0.04);border:1px solid rgba(212,175,55,0.1);border-radius:12px;text-decoration:none;color:#e8e8e8;transition:all 0.3s}
 .citem:hover{background:rgba(212,175,55,0.08);border-color:rgba(212,175,55,0.3)}
-.cicon{font-size:22px}
-.clabel{font-size:10px;color:#666;letter-spacing:1px;text-transform:uppercase}
+.cicon{font-size:22px}.clabel{font-size:10px;color:#666;letter-spacing:1px;text-transform:uppercase}
 .cval{font-size:14px;font-weight:600;margin-top:2px}
 .cform{background:rgba(255,255,255,0.02);border:1px solid rgba(212,175,55,0.12);border-radius:20px;padding:30px}
 .fg{margin-bottom:16px}
@@ -110,6 +112,7 @@ footer{background:#0f0f1c;border-top:1px solid rgba(212,175,55,0.1);padding:40px
 .mmenu a{font-size:26px;color:#e8e8e8;text-decoration:none}
 .mmenu a:hover{color:#D4AF37}
 .mclose{position:absolute;top:20px;right:20px;background:none;border:none;color:#D4AF37;font-size:36px;cursor:pointer}
+/* Admin */
 #adminBtn{position:fixed;bottom:24px;right:24px;z-index:999;background:linear-gradient(135deg,#D4AF37,#f0d060);color:#111;border:none;border-radius:50%;width:56px;height:56px;font-size:24px;cursor:pointer;box-shadow:0 4px 20px rgba(212,175,55,0.5);touch-action:manipulation;-webkit-tap-highlight-color:transparent}
 .adm-ov{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.9);z-index:1000;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:16px}
 .adm-ov.open{display:block}
@@ -119,7 +122,7 @@ footer{background:#0f0f1c;border-top:1px solid rgba(212,175,55,0.1);padding:40px
 .adm-x{background:none;border:none;color:#888;font-size:32px;cursor:pointer;line-height:1}
 .adm-login{text-align:center;padding:32px 0}
 .adm-login h3{color:#D4AF37;font-size:22px;margin-bottom:24px}
-.adm-login input{width:100%;background:rgba(255,255,255,0.05);border:1px solid rgba(212,175,55,0.2);border-radius:12px;padding:14px;color:#fff;font-size:18px;text-align:center;outline:none;letter-spacing:4px;margin-bottom:16px;font-family:Georgia,serif;-webkit-text-security:disc}
+.adm-login input{width:100%;background:rgba(255,255,255,0.05);border:1px solid rgba(212,175,55,0.2);border-radius:12px;padding:14px;color:#fff;font-size:18px;text-align:center;outline:none;margin-bottom:16px;font-family:Georgia,serif}
 .adm-login button{width:100%;background:linear-gradient(135deg,#D4AF37,#f0d060);color:#111;border:none;padding:16px;border-radius:12px;font-size:16px;font-weight:700;cursor:pointer;font-family:Georgia,serif;touch-action:manipulation}
 .adm-err{color:#ef4444;font-size:13px;margin-top:10px;min-height:20px}
 .adm-tabs{display:flex;gap:8px;margin-bottom:20px;flex-wrap:wrap}
@@ -138,14 +141,23 @@ footer{background:#0f0f1c;border-top:1px solid rgba(212,175,55,0.1);padding:40px
 .adm-it-t{font-weight:700;font-size:14px;color:#D4AF37}
 .adm-it-s{font-size:12px;color:#666;margin-top:3px}
 .aok{color:#22c55e;font-size:13px;text-align:center;margin-top:10px;font-weight:700;display:none}
-.hint{color:#555;font-size:12px;font-style:italic;margin-top:6px}
+.hint{color:#555;font-size:12px;font-style:italic;margin-top:6px;line-height:1.5}
+/* Upload depuis galerie */
+.upload-zone{border:2px dashed rgba(212,175,55,0.3);border-radius:12px;padding:20px;text-align:center;cursor:pointer;margin-bottom:10px;transition:all 0.3s}
+.upload-zone:hover,.upload-zone.drag{border-color:#D4AF37;background:rgba(212,175,55,0.05)}
+.upload-zone p{color:#888;font-size:14px;margin-top:8px}
+.upload-prev{width:100%;max-height:200px;object-fit:contain;border-radius:10px;margin-top:10px;display:none}
+.upload-prog{height:4px;background:rgba(212,175,55,0.2);border-radius:2px;margin-top:8px;display:none}
+.upload-prog-bar{height:100%;background:#D4AF37;border-radius:2px;width:0%;transition:width 0.3s}
+/* Photo profil admin */
+.profil-wrap{text-align:center;padding:16px 0}
+.profil-prev{width:100px;height:100px;border-radius:50%;object-fit:cover;border:3px solid #D4AF37;margin:0 auto 12px;display:block}
+.profil-note{color:#666;font-size:12px;margin-top:8px}
 @media(max-width:768px){
-  .nav-links{display:none}
-  .hamburger{display:block}
+  .nav-links{display:none}.hamburger{display:block}
   .values{grid-template-columns:1fr}
   .galerie-grid{grid-template-columns:1fr 1fr}
-  .ecard{grid-template-columns:60px 1fr}
-  .ebadge{display:none}
+  .ecard{grid-template-columns:60px 1fr}.ebadge{display:none}
   .contact-grid{grid-template-columns:1fr}
   .membres-grid{grid-template-columns:repeat(2,1fr)}
 }
@@ -180,7 +192,10 @@ footer{background:#0f0f1c;border-top:1px solid rgba(212,175,55,0.1);padding:40px
 
 <section id="hero">
   <div class="hero-tag">🎵 Groupe Musical & Entraide — Bénin</div>
-  <h1 class="hero-title"><span class="gold">FLIGÔ</span></h1>
+  <div class="hero-logo-wrap">
+    <img id="heroLogoImg" class="hero-logo-img" src="" alt="FLIGÔ">
+    <h1 class="hero-title hero-logo-default" id="heroLogoTxt"><span class="gold">FLIGÔ</span></h1>
+  </div>
   <p class="hero-sub">Don de Dieu</p>
   <div class="hero-line"></div>
   <p class="hero-desc">Une famille soudée autour de la musique et de l'entraide financière. Ensemble, nous grandissons et prospérons.</p>
@@ -297,7 +312,6 @@ footer{background:#0f0f1c;border-top:1px solid rgba(212,175,55,0.1);padding:40px
   <div class="fcopy">© 2026 FLIGÔ Don de Dieu — Tous droits réservés</div>
 </footer>
 
-<!-- BOUTON ADMIN -->
 <button type="button" id="adminBtn">⚙️</button>
 
 <!-- PANNEAU ADMIN -->
@@ -307,7 +321,6 @@ footer{background:#0f0f1c;border-top:1px solid rgba(212,175,55,0.1);padding:40px
       <div class="adm-title">⚙️ Administration FLIGÔ</div>
       <button type="button" class="adm-x" id="admX">×</button>
     </div>
-    <!-- LOGIN -->
     <div id="admLogin">
       <div class="adm-login">
         <h3>🔐 Accès Admin</h3>
@@ -316,60 +329,92 @@ footer{background:#0f0f1c;border-top:1px solid rgba(212,175,55,0.1);padding:40px
         <div class="adm-err" id="admErr"></div>
       </div>
     </div>
-    <!-- CONTENU -->
     <div id="admCtx" style="display:none">
       <div class="adm-tabs">
-        <button type="button" class="adm-tab act" id="tab0" onclick="admTab(this,'tA')">📢 Annonces</button>
-        <button type="button" class="adm-tab" id="tab1" onclick="admTab(this,'tG')">📸 Galerie</button>
-        <button type="button" class="adm-tab" id="tab2" onclick="admTab(this,'tE')">📅 Événements</button>
-        <button type="button" class="adm-tab" id="tab3" onclick="admTab(this,'tM')">👥 Membres</button>
+        <button type="button" class="adm-tab act" onclick="admTab(this,'tA')">📢 Annonces</button>
+        <button type="button" class="adm-tab" onclick="admTab(this,'tG')">📸 Galerie</button>
+        <button type="button" class="adm-tab" onclick="admTab(this,'tE')">📅 Événements</button>
+        <button type="button" class="adm-tab" onclick="admTab(this,'tM')">👥 Membres</button>
+        <button type="button" class="adm-tab" onclick="admTab(this,'tP')">🖼️ Profil</button>
       </div>
-      <!-- Annonces -->
+
+      <!-- ANNONCES -->
       <div id="tA">
         <div class="af"><label>Titre</label><input type="text" id="aT" placeholder="Titre de l'annonce"></div>
-        <div class="af"><label>Contenu</label><textarea id="aC" rows="4" placeholder="Contenu de l'annonce..."></textarea></div>
-        <button type="button" class="abtn" onclick="addAnnonce()">➕ Publier l'annonce</button>
+        <div class="af"><label>Contenu</label><textarea id="aC" rows="5" placeholder="Contenu de l'annonce..."></textarea></div>
+        <button type="button" class="abtn" id="btnAddAnnonce">➕ Publier l'annonce</button>
         <div class="aok" id="okA">✅ Annonce publiée !</div>
         <div class="adm-list" id="ladA"></div>
       </div>
-      <!-- Galerie -->
+
+      <!-- GALERIE -->
       <div id="tG" style="display:none">
         <div class="gtab-btns">
           <button type="button" class="gtab-btn active" id="gbP" onclick="swG('photo')">📸 Photo</button>
           <button type="button" class="gtab-btn" id="gbV" onclick="swG('video')">🎬 Vidéo</button>
         </div>
+        <!-- Photo -->
         <div id="gfP">
-          <div class="af"><label>Lien photo (URL)</label><input type="text" id="gU" placeholder="https://..."></div>
-          <div class="af"><label>Légende</label><input type="text" id="gL" placeholder="Description"></div>
-          <div class="hint">💡 Uploadez sur imgur.com depuis votre téléphone</div>
+          <div class="af"><label>Choisir une photo</label>
+            <div class="upload-zone" id="uploadZone" onclick="document.getElementById('photoFileInput').click()">
+              <div style="font-size:36px">📷</div>
+              <p>Appuyer pour choisir depuis ta galerie</p>
+            </div>
+            <input type="file" id="photoFileInput" accept="image/*" style="display:none">
+            <img id="uploadPrev" class="upload-prev" src="" alt="Aperçu">
+            <div class="upload-prog" id="uploadProg"><div class="upload-prog-bar" id="uploadProgBar"></div></div>
+          </div>
+          <div class="af"><label>Ou coller un lien URL</label><input type="text" id="gU" placeholder="https://..."></div>
+          <div class="af"><label>Légende</label><input type="text" id="gL" placeholder="Description de la photo"></div>
         </div>
+        <!-- Vidéo -->
         <div id="gfV" style="display:none">
           <div class="af"><label>Lien YouTube ou TikTok</label><input type="text" id="gVU" placeholder="https://youtu.be/... ou tiktok.com/..."></div>
-          <div class="af"><label>Légende</label><input type="text" id="gVL" placeholder="Description"></div>
-          <div class="hint">💡 YouTube : Partager → Copier le lien &nbsp;|&nbsp; TikTok : Partager → Copier le lien</div>
+          <div class="af"><label>Légende</label><input type="text" id="gVL" placeholder="Description de la vidéo"></div>
+          <div class="hint">💡 YouTube : bouton Partager → Copier le lien<br>💡 TikTok : bouton Partager → Copier le lien</div>
         </div>
-        <button type="button" class="abtn" onclick="addMedia()">➕ Ajouter</button>
+        <button type="button" class="abtn" id="btnAddMedia">➕ Ajouter</button>
         <div class="aok" id="okG">✅ Ajouté !</div>
         <div class="adm-list" id="ladG"></div>
       </div>
-      <!-- Evenements -->
+
+      <!-- EVENEMENTS -->
       <div id="tE" style="display:none">
         <div class="af"><label>Titre</label><input type="text" id="eT" placeholder="Nom de l'événement"></div>
         <div class="af"><label>Date</label><input type="date" id="eD"></div>
         <div class="af"><label>Lieu</label><input type="text" id="eL" placeholder="Lieu de l'événement"></div>
         <div class="af"><label>Type</label><select id="eTp"><option>Concert</option><option>Mensuel</option><option>Réunion</option><option>Autre</option></select></div>
-        <button type="button" class="abtn" onclick="addEvt()">➕ Ajouter l'événement</button>
+        <button type="button" class="abtn" id="btnAddEvt">➕ Ajouter l'événement</button>
         <div class="aok" id="okE">✅ Événement ajouté !</div>
         <div class="adm-list" id="ladE"></div>
       </div>
-      <!-- Membres -->
+
+      <!-- MEMBRES -->
       <div id="tM" style="display:none">
         <div class="af"><label>Nom complet</label><input type="text" id="mN" placeholder="Nom du membre"></div>
         <div class="af"><label>Rôle / Instrument</label><input type="text" id="mR" placeholder="Ex: Guitariste, Chanteur..."></div>
         <div class="af"><label>Photo URL (optionnel)</label><input type="text" id="mP" placeholder="https://..."></div>
-        <button type="button" class="abtn" onclick="addMembre()">➕ Ajouter le membre</button>
+        <button type="button" class="abtn" id="btnAddMembre">➕ Ajouter le membre</button>
         <div class="aok" id="okM">✅ Membre ajouté !</div>
         <div class="adm-list" id="ladM"></div>
+      </div>
+
+      <!-- PHOTO PROFIL -->
+      <div id="tP" style="display:none">
+        <div class="profil-wrap">
+          <img id="profilPrev" class="profil-prev" src="" alt="Photo profil">
+          <div class="hint">Photo actuelle du site</div>
+        </div>
+        <div class="af"><label>Choisir une nouvelle photo</label>
+          <div class="upload-zone" id="profilZone" onclick="document.getElementById('profilFileInput').click()">
+            <div style="font-size:36px">🖼️</div>
+            <p>Appuyer pour choisir depuis ta galerie</p>
+          </div>
+          <input type="file" id="profilFileInput" accept="image/*" style="display:none">
+          <div class="upload-prog" id="profilProg"><div class="upload-prog-bar" id="profilProgBar"></div></div>
+        </div>
+        <div class="hint" style="margin-top:8px">La photo remplacera le texte FLIGÔ en haut de la page. Recommandé : photo carrée ou logo.</div>
+        <div class="aok" id="okP">✅ Photo de profil mise à jour !</div>
       </div>
     </div>
   </div>
@@ -388,35 +433,64 @@ try {
     appId:"1:421093082613:web:171fc395c06188c3de4cbc"
   });
   db = firebase.firestore();
-} catch(e){ console.log(e); }
+} catch(e){ console.log('Firebase:', e); }
 
-var C = {A:'site_annonces',G:'site_galerie',E:'site_evenements',M:'site_membres'};
+// ── Config ──
+// IMPORTANT: Les données du site sont stockées dans fligo/site_data (dans le doc existant)
+// Chaque collection est simulée via des sous-tableaux dans Firestore
+// On utilise des collections séparées autorisées
+var C = {A:'site_annonces', G:'site_galerie', E:'site_evenements', M:'site_membres', CFG:'site_config'};
 var MDP = "Fligo@2025!";
 var admOk = false;
 var gType = 'photo';
+var photoFileBase64 = null;
+var profilBase64 = null;
 
 function fd(iso){
   if(!iso) return '';
-  try{ return new Date(iso).toLocaleDateString('fr-FR',{day:'2-digit',month:'short',year:'numeric'}); }catch(e){ return ''; }
+  try{ return new Date(iso).toLocaleDateString('fr-FR',{day:'2-digit',month:'short',year:'numeric'}); }
+  catch(e){ return ''; }
 }
 
-// ── Attendre chargement complet ──
+// ── SESSION PERSISTANTE (localStorage) ──
+function sauverSession(){ try{ localStorage.setItem('fligo_admin_ok','1'); }catch(e){} }
+function lireSession(){ try{ return localStorage.getItem('fligo_admin_ok')==='1'; }catch(e){ return false; } }
+function effacerSession(){ try{ localStorage.removeItem('fligo_admin_ok'); }catch(e){} }
+
+// ── INIT ──
 window.onload = function() {
   // Bouton admin
   document.getElementById('adminBtn').onclick = function(){ ouvrir(); };
-  // Fermer
   document.getElementById('admX').onclick = function(){ fermer(); };
   document.getElementById('admOv').onclick = function(e){ if(e.target===this) fermer(); };
   // Login
   document.getElementById('admBtn').onclick = function(){ login(); };
   document.getElementById('admMdp').onkeyup = function(e){ if(e.keyCode===13) login(); };
-  // Données publiques
-  if(db) chargePublic();
+  // Boutons admin (attachés ici pour éviter tout problème)
+  document.getElementById('btnAddAnnonce').onclick = function(){ addAnnonce(); };
+  document.getElementById('btnAddMedia').onclick = function(){ addMedia(); };
+  document.getElementById('btnAddEvt').onclick = function(){ addEvt(); };
+  document.getElementById('btnAddMembre').onclick = function(){ addMembre(); };
+  // Upload photo galerie
+  document.getElementById('photoFileInput').onchange = function(e){ previewPhoto(e.target.files[0]); };
+  // Upload photo profil
+  document.getElementById('profilFileInput').onchange = function(e){ previewProfil(e.target.files[0]); };
+  // Session persistante — si déjà connecté
+  if(lireSession()){ admOk = true; }
+  // Charger données publiques
+  if(db){
+    chargePublic();
+    chargeConfig();
+  }
 };
 
 function ouvrir(){
   document.getElementById('admOv').classList.add('open');
-  if(admOk) chargeAdmin();
+  if(admOk){
+    document.getElementById('admLogin').style.display='none';
+    document.getElementById('admCtx').style.display='block';
+    chargeAdmin();
+  }
 }
 function fermer(){ document.getElementById('admOv').classList.remove('open'); }
 
@@ -427,6 +501,7 @@ function login(){
   if(!v){ e.textContent='⚠️ Entrez le mot de passe'; return; }
   if(v === MDP){
     admOk = true;
+    sauverSession();
     document.getElementById('admLogin').style.display = 'none';
     document.getElementById('admCtx').style.display = 'block';
     chargeAdmin();
@@ -439,8 +514,9 @@ function login(){
 function admTab(btn, id){
   document.querySelectorAll('.adm-tab').forEach(function(t){ t.classList.remove('act'); });
   btn.classList.add('act');
-  ['tA','tG','tE','tM'].forEach(function(t){ document.getElementById(t).style.display = (t===id)?'block':'none'; });
-  chargeAdmin();
+  ['tA','tG','tE','tM','tP'].forEach(function(t){ document.getElementById(t).style.display=(t===id)?'block':'none'; });
+  if(id !== 'tP') chargeAdmin();
+  else chargeProfilPrev();
 }
 
 function swG(t){
@@ -451,17 +527,100 @@ function swG(t){
   document.getElementById('gbV').classList.toggle('active', t==='video');
 }
 
-function showOk(id){ var el=document.getElementById(id); el.style.display='block'; setTimeout(function(){ el.style.display='none'; }, 2500); }
+function showOk(id){ var el=document.getElementById(id); el.style.display='block'; setTimeout(function(){ el.style.display='none'; }, 3000); }
 
-// ── Données publiques ──
+// ── CONFIG (photo profil) ──
+function chargeConfig(){
+  db.collection(C.CFG).doc('main').get().then(function(doc){
+    if(doc.exists && doc.data().photoProfil){
+      afficherPhotoProfil(doc.data().photoProfil);
+    }
+  }).catch(function(){});
+}
+
+function afficherPhotoProfil(base64){
+  var img = document.getElementById('heroLogoImg');
+  var txt = document.getElementById('heroLogoTxt');
+  if(base64 && base64.length > 10){
+    img.src = base64;
+    img.style.display = 'block';
+    txt.style.display = 'none';
+  } else {
+    img.style.display = 'none';
+    txt.style.display = 'block';
+  }
+}
+
+function chargeProfilPrev(){
+  db.collection(C.CFG).doc('main').get().then(function(doc){
+    var prev = document.getElementById('profilPrev');
+    if(doc.exists && doc.data().photoProfil){
+      prev.src = doc.data().photoProfil;
+      prev.style.display = 'block';
+    }
+  }).catch(function(){});
+}
+
+// ── UPLOAD PHOTO (base64) ──
+function previewPhoto(file){
+  if(!file) return;
+  if(file.size > 3*1024*1024){ alert('Photo trop grande. Maximum 3 Mo.'); return; }
+  var reader = new FileReader();
+  reader.onload = function(e){
+    photoFileBase64 = e.target.result;
+    var prev = document.getElementById('uploadPrev');
+    prev.src = photoFileBase64;
+    prev.style.display = 'block';
+    document.getElementById('gU').value = '';
+  };
+  reader.readAsDataURL(file);
+}
+
+function previewProfil(file){
+  if(!file) return;
+  if(file.size > 2*1024*1024){ alert('Photo trop grande. Maximum 2 Mo.'); return; }
+  var reader = new FileReader();
+  reader.onload = function(e){
+    profilBase64 = e.target.result;
+    var prev = document.getElementById('profilPrev');
+    prev.src = profilBase64;
+    prev.style.display = 'block';
+    // Sauvegarder automatiquement
+    sauverProfil();
+  };
+  reader.readAsDataURL(file);
+}
+
+function sauverProfil(){
+  if(!profilBase64 || !db){ alert('Choisissez une photo d\'abord.'); return; }
+  var prog = document.getElementById('profilProg');
+  var bar = document.getElementById('profilProgBar');
+  prog.style.display = 'block';
+  bar.style.width = '60%';
+  db.collection(C.CFG).doc('main').set({ photoProfil: profilBase64 }, { merge: true }).then(function(){
+    bar.style.width = '100%';
+    setTimeout(function(){ prog.style.display='none'; bar.style.width='0%'; }, 500);
+    showOk('okP');
+    afficherPhotoProfil(profilBase64);
+  }).catch(function(err){
+    prog.style.display = 'none';
+    alert('Erreur lors de la sauvegarde. Vérifiez les règles Firebase.');
+    console.log(err);
+  });
+}
+
+// ── DONNÉES PUBLIQUES ──
 function chargePublic(){
+  // Annonces
   db.collection(C.A).orderBy('date','desc').onSnapshot(function(s){
     var el=document.getElementById('lstA'); if(!el) return;
     if(s.empty){ el.innerHTML='<div class="empty-msg">Aucune annonce pour le moment.</div>'; return; }
-    var h=''; s.forEach(function(d){ var a=d.data(); h+='<div class="annonce-card"><div class="annonce-titre">'+a.titre+'</div><div class="annonce-contenu">'+a.contenu+'</div><div class="annonce-date">📅 '+fd(a.date)+'</div></div>'; });
+    var h='';
+    s.forEach(function(d){ var a=d.data(); h+='<div class="annonce-card"><div class="annonce-titre">'+a.titre+'</div><div class="annonce-contenu">'+a.contenu+'</div><div class="annonce-date">📅 '+fd(a.date)+'</div></div>'; });
     el.innerHTML=h;
-  },function(){});
+  }, function(){});
 
+  // Galerie
   db.collection(C.G).orderBy('date','desc').onSnapshot(function(s){
     var el=document.getElementById('lstG'); if(!el||s.empty) return;
     var h=''; var i=0;
@@ -482,8 +641,9 @@ function chargePublic(){
       i++;
     });
     el.innerHTML=h;
-  },function(){});
+  }, function(){});
 
+  // Événements
   db.collection(C.E).orderBy('date','asc').onSnapshot(function(s){
     var el=document.getElementById('lstE'); if(!el) return;
     if(s.empty){ el.innerHTML='<div class="empty-msg">Aucun événement programmé.</div>'; return; }
@@ -495,8 +655,9 @@ function chargePublic(){
       h+='<div class="ecard"><div class="ebox"><div class="eday">'+j+'</div><div class="emon">'+m+'</div></div><div class="einfo"><h3>'+e.titre+'</h3><div class="emeta">📍 '+e.lieu+'</div></div><div class="ebadge">'+e.type+'</div></div>';
     });
     el.innerHTML=h;
-  },function(){});
+  }, function(){});
 
+  // Membres
   db.collection(C.M).orderBy('date','asc').onSnapshot(function(s){
     var el=document.getElementById('lstM'); if(!el) return;
     if(s.empty){ el.innerHTML='<div class="empty-msg" style="grid-column:1/-1">Les membres seront présentés bientôt.</div>'; return; }
@@ -508,7 +669,7 @@ function chargePublic(){
       h+='<div class="mcard"><div class="mavatar">'+(m.photo?'<img src="'+m.photo+'" alt="'+m.nom+'">':ini)+'</div><div class="mnom">'+m.nom+'</div><div class="mrole">'+m.role+'</div></div>';
     });
     el.innerHTML=h;
-  },function(){});
+  }, function(){});
 }
 
 function getEmbed(url){
@@ -519,58 +680,122 @@ function getEmbed(url){
   return null;
 }
 
-// ── Admin actions ──
+// ── ACTIONS ADMIN ──
 function addAnnonce(){
-  if(!db){ alert('Firebase non disponible'); return; }
-  var t=document.getElementById('aT').value.trim(), c=document.getElementById('aC').value.trim();
+  if(!db){ alert('Firebase non disponible.'); return; }
+  var t=document.getElementById('aT').value.trim();
+  var c=document.getElementById('aC').value.trim();
   if(!t||!c){ alert('Remplissez le titre et le contenu.'); return; }
-  db.collection(C.A).add({titre:t,contenu:c,date:new Date().toISOString()}).then(function(){
-    document.getElementById('aT').value=''; document.getElementById('aC').value='';
-    showOk('okA'); chargeAdmin();
-  });
+  document.getElementById('btnAddAnnonce').textContent = '⏳ Envoi...';
+  document.getElementById('btnAddAnnonce').disabled = true;
+  db.collection(C.A).add({ titre:t, contenu:c, date:new Date().toISOString() })
+    .then(function(){
+      document.getElementById('aT').value='';
+      document.getElementById('aC').value='';
+      document.getElementById('btnAddAnnonce').textContent='➕ Publier l\'annonce';
+      document.getElementById('btnAddAnnonce').disabled=false;
+      showOk('okA');
+      chargeAdmin();
+    })
+    .catch(function(err){
+      document.getElementById('btnAddAnnonce').textContent='➕ Publier l\'annonce';
+      document.getElementById('btnAddAnnonce').disabled=false;
+      alert('Erreur Firebase. Vérifiez les règles Firestore.\n'+err.message);
+    });
 }
 
 function addMedia(){
-  if(!db){ alert('Firebase non disponible'); return; }
+  if(!db){ alert('Firebase non disponible.'); return; }
   if(gType==='photo'){
-    var u=document.getElementById('gU').value.trim(), l=document.getElementById('gL').value.trim();
-    if(!u){ alert('Entrez un lien de photo.'); return; }
-    db.collection(C.G).add({type:'photo',url:u,legende:l||'Photo FLIGÔ',date:new Date().toISOString()}).then(function(){
-      document.getElementById('gU').value=''; document.getElementById('gL').value='';
-      showOk('okG'); chargeAdmin();
-    });
+    var url = photoFileBase64 || document.getElementById('gU').value.trim();
+    var l = document.getElementById('gL').value.trim();
+    if(!url){ alert('Choisissez une photo ou entrez un lien URL.'); return; }
+    document.getElementById('btnAddMedia').textContent='⏳ Envoi...';
+    document.getElementById('btnAddMedia').disabled=true;
+    db.collection(C.G).add({ type:'photo', url:url, legende:l||'Photo FLIGÔ', date:new Date().toISOString() })
+      .then(function(){
+        document.getElementById('gU').value='';
+        document.getElementById('gL').value='';
+        document.getElementById('uploadPrev').style.display='none';
+        photoFileBase64=null;
+        document.getElementById('btnAddMedia').textContent='➕ Ajouter';
+        document.getElementById('btnAddMedia').disabled=false;
+        showOk('okG'); chargeAdmin();
+      })
+      .catch(function(err){
+        document.getElementById('btnAddMedia').textContent='➕ Ajouter';
+        document.getElementById('btnAddMedia').disabled=false;
+        alert('Erreur Firebase: '+err.message);
+      });
   } else {
-    var u2=document.getElementById('gVU').value.trim(), l2=document.getElementById('gVL').value.trim();
+    var u2=document.getElementById('gVU').value.trim();
+    var l2=document.getElementById('gVL').value.trim();
     if(!u2){ alert('Entrez un lien vidéo.'); return; }
     if(u2.indexOf('youtube')<0&&u2.indexOf('youtu.be')<0&&u2.indexOf('tiktok')<0){ alert('Lien YouTube ou TikTok uniquement.'); return; }
-    db.collection(C.G).add({type:'video',url:u2,legende:l2||'Vidéo FLIGÔ',date:new Date().toISOString()}).then(function(){
-      document.getElementById('gVU').value=''; document.getElementById('gVL').value='';
-      showOk('okG'); chargeAdmin();
-    });
+    document.getElementById('btnAddMedia').textContent='⏳ Envoi...';
+    document.getElementById('btnAddMedia').disabled=true;
+    db.collection(C.G).add({ type:'video', url:u2, legende:l2||'Vidéo FLIGÔ', date:new Date().toISOString() })
+      .then(function(){
+        document.getElementById('gVU').value='';
+        document.getElementById('gVL').value='';
+        document.getElementById('btnAddMedia').textContent='➕ Ajouter';
+        document.getElementById('btnAddMedia').disabled=false;
+        showOk('okG'); chargeAdmin();
+      })
+      .catch(function(err){
+        document.getElementById('btnAddMedia').textContent='➕ Ajouter';
+        document.getElementById('btnAddMedia').disabled=false;
+        alert('Erreur Firebase: '+err.message);
+      });
   }
 }
 
 function addEvt(){
-  if(!db){ alert('Firebase non disponible'); return; }
-  var t=document.getElementById('eT').value.trim(), d=document.getElementById('eD').value, l=document.getElementById('eL').value.trim(), tp=document.getElementById('eTp').value;
+  if(!db){ alert('Firebase non disponible.'); return; }
+  var t=document.getElementById('eT').value.trim();
+  var d=document.getElementById('eD').value;
+  var l=document.getElementById('eL').value.trim();
+  var tp=document.getElementById('eTp').value;
   if(!t||!d){ alert('Remplissez le titre et la date.'); return; }
-  db.collection(C.E).add({titre:t,date:d,lieu:l||'À confirmer',type:tp,createdAt:new Date().toISOString()}).then(function(){
-    document.getElementById('eT').value=''; document.getElementById('eD').value=''; document.getElementById('eL').value='';
-    showOk('okE'); chargeAdmin();
-  });
+  document.getElementById('btnAddEvt').textContent='⏳ Envoi...';
+  document.getElementById('btnAddEvt').disabled=true;
+  db.collection(C.E).add({ titre:t, date:d, lieu:l||'À confirmer', type:tp, createdAt:new Date().toISOString() })
+    .then(function(){
+      document.getElementById('eT').value=''; document.getElementById('eD').value=''; document.getElementById('eL').value='';
+      document.getElementById('btnAddEvt').textContent='➕ Ajouter l\'événement';
+      document.getElementById('btnAddEvt').disabled=false;
+      showOk('okE'); chargeAdmin();
+    })
+    .catch(function(err){
+      document.getElementById('btnAddEvt').textContent='➕ Ajouter l\'événement';
+      document.getElementById('btnAddEvt').disabled=false;
+      alert('Erreur Firebase: '+err.message);
+    });
 }
 
 function addMembre(){
-  if(!db){ alert('Firebase non disponible'); return; }
-  var n=document.getElementById('mN').value.trim(), r=document.getElementById('mR').value.trim(), p=document.getElementById('mP').value.trim();
+  if(!db){ alert('Firebase non disponible.'); return; }
+  var n=document.getElementById('mN').value.trim();
+  var r=document.getElementById('mR').value.trim();
+  var p=document.getElementById('mP').value.trim();
   if(!n){ alert('Entrez le nom du membre.'); return; }
-  db.collection(C.M).add({nom:n,role:r||'Membre',photo:p||'',date:new Date().toISOString()}).then(function(){
-    document.getElementById('mN').value=''; document.getElementById('mR').value=''; document.getElementById('mP').value='';
-    showOk('okM'); chargeAdmin();
-  });
+  document.getElementById('btnAddMembre').textContent='⏳ Envoi...';
+  document.getElementById('btnAddMembre').disabled=true;
+  db.collection(C.M).add({ nom:n, role:r||'Membre', photo:p||'', date:new Date().toISOString() })
+    .then(function(){
+      document.getElementById('mN').value=''; document.getElementById('mR').value=''; document.getElementById('mP').value='';
+      document.getElementById('btnAddMembre').textContent='➕ Ajouter le membre';
+      document.getElementById('btnAddMembre').disabled=false;
+      showOk('okM'); chargeAdmin();
+    })
+    .catch(function(err){
+      document.getElementById('btnAddMembre').textContent='➕ Ajouter le membre';
+      document.getElementById('btnAddMembre').disabled=false;
+      alert('Erreur Firebase: '+err.message);
+    });
 }
 
-function suppr(col,id){
+function suppr(col, id){
   if(!confirm('Supprimer cet élément ?')) return;
   db.collection(col).doc(id).delete().then(function(){ chargeAdmin(); });
 }
@@ -581,22 +806,25 @@ function chargeAdmin(){
     var el=document.getElementById('ladA'); if(!el) return;
     var h=''; s.forEach(function(d){ var a=d.data(); h+='<div class="adm-item"><div class="adm-it"><div class="adm-it-t">'+a.titre+'</div><div class="adm-it-s">'+fd(a.date)+'</div></div><button type="button" class="adel" onclick="suppr(\''+C.A+'\',\''+d.id+'\')">🗑️</button></div>'; });
     el.innerHTML=h||'<div style="color:#555;font-size:13px;text-align:center;padding:12px">Aucune annonce</div>';
-  });
+  }).catch(function(e){ document.getElementById('ladA').innerHTML='<div style="color:#ef4444;font-size:12px;padding:8px">⚠️ Erreur de lecture. Vérifiez les règles Firebase.</div>'; });
+
   db.collection(C.G).orderBy('date','desc').get().then(function(s){
     var el=document.getElementById('ladG'); if(!el) return;
     var h=''; s.forEach(function(d){ var g=d.data(); var ico=g.type==='video'?'🎬':'📸'; h+='<div class="adm-item"><div class="adm-it"><div class="adm-it-t">'+ico+' '+g.legende+'</div><div class="adm-it-s">'+(g.type==='video'?'Vidéo':'Photo')+' — '+fd(g.date)+'</div></div><button type="button" class="adel" onclick="suppr(\''+C.G+'\',\''+d.id+'\')">🗑️</button></div>'; });
     el.innerHTML=h||'<div style="color:#555;font-size:13px;text-align:center;padding:12px">Aucun média</div>';
-  });
+  }).catch(function(){});
+
   db.collection(C.E).orderBy('date','asc').get().then(function(s){
     var el=document.getElementById('ladE'); if(!el) return;
     var h=''; s.forEach(function(d){ var e=d.data(); h+='<div class="adm-item"><div class="adm-it"><div class="adm-it-t">'+e.titre+'</div><div class="adm-it-s">'+fd(e.date)+' — '+e.lieu+'</div></div><button type="button" class="adel" onclick="suppr(\''+C.E+'\',\''+d.id+'\')">🗑️</button></div>'; });
     el.innerHTML=h||'<div style="color:#555;font-size:13px;text-align:center;padding:12px">Aucun événement</div>';
-  });
+  }).catch(function(){});
+
   db.collection(C.M).orderBy('date','asc').get().then(function(s){
     var el=document.getElementById('ladM'); if(!el) return;
     var h=''; s.forEach(function(d){ var m=d.data(); h+='<div class="adm-item"><div class="adm-it"><div class="adm-it-t">'+m.nom+'</div><div class="adm-it-s">'+m.role+'</div></div><button type="button" class="adel" onclick="suppr(\''+C.M+'\',\''+d.id+'\')">🗑️</button></div>'; });
     el.innerHTML=h||'<div style="color:#555;font-size:13px;text-align:center;padding:12px">Aucun membre</div>';
-  });
+  }).catch(function(){});
 }
 
 function envoyerContact(){
