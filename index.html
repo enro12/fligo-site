@@ -4,190 +4,145 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>FLIGÔ Don de Dieu</title>
+<script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.7.0/firebase-firestore-compat.js"></script>
 <style>
 * { margin:0; padding:0; box-sizing:border-box; }
 body { background:#06060f; color:#e8e8e8; font-family:Georgia,serif; }
-
-/* NAV */
-nav {
-  position:fixed; top:0; left:0; right:0; z-index:100;
-  display:flex; justify-content:space-between; align-items:center;
-  padding:16px 20px;
-  background:rgba(6,6,15,0.95);
-  border-bottom:1px solid rgba(212,175,55,0.2);
-}
+nav { position:fixed; top:0; left:0; right:0; z-index:100; display:flex; justify-content:space-between; align-items:center; padding:16px 20px; background:rgba(6,6,15,0.97); border-bottom:1px solid rgba(212,175,55,0.2); }
 .logo { color:#D4AF37; font-size:22px; font-weight:900; letter-spacing:3px; }
-.nav-links { display:flex; gap:20px; list-style:none; }
-.nav-links a { color:#888; text-decoration:none; font-size:13px; }
+.nav-links { display:flex; gap:20px; list-style:none; align-items:center; }
+.nav-links a { color:#888; text-decoration:none; font-size:13px; transition:color 0.2s; }
 .nav-links a:hover { color:#D4AF37; }
-.btn-nav {
-  background:linear-gradient(135deg,#D4AF37,#f0d060);
-  color:#111 !important; padding:8px 18px; border-radius:20px; font-weight:700;
-}
+.btn-nav { background:linear-gradient(135deg,#D4AF37,#f0d060); color:#111 !important; padding:8px 18px; border-radius:20px; font-weight:700; }
 .hamburger { display:none; font-size:26px; color:#D4AF37; cursor:pointer; background:none; border:none; }
-
-/* HERO */
-#hero {
-  min-height:100vh; display:flex; flex-direction:column;
-  align-items:center; justify-content:center; text-align:center;
-  padding:100px 24px 60px;
-  background:radial-gradient(ellipse 80% 60% at 50% 40%, rgba(212,175,55,0.08), transparent 70%), #06060f;
-}
-.hero-tag {
-  color:#D4AF37; border:1px solid rgba(212,175,55,0.3);
-  padding:6px 18px; border-radius:20px; font-size:12px; margin-bottom:24px;
-  letter-spacing:2px;
-}
+#hero { min-height:100vh; display:flex; flex-direction:column; align-items:center; justify-content:center; text-align:center; padding:100px 24px 60px; background:radial-gradient(ellipse 80% 60% at 50% 40%, rgba(212,175,55,0.08), transparent 70%), #06060f; }
+.hero-tag { color:#D4AF37; border:1px solid rgba(212,175,55,0.3); padding:6px 18px; border-radius:20px; font-size:12px; margin-bottom:24px; letter-spacing:2px; }
 .hero-title { font-size:clamp(52px,12vw,100px); font-weight:900; line-height:1; }
-.hero-title .gold {
-  background:linear-gradient(135deg,#D4AF37,#f0d060);
-  -webkit-background-clip:text; -webkit-text-fill-color:transparent;
-}
+.gold { background:linear-gradient(135deg,#D4AF37,#f0d060); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
 .hero-sub { font-size:clamp(14px,4vw,20px); color:#888; font-style:italic; margin-top:12px; }
 .hero-line { width:60px; height:1px; background:#D4AF37; margin:24px auto; }
 .hero-desc { font-size:17px; max-width:500px; line-height:1.8; color:#aaa; }
 .hero-btns { display:flex; gap:14px; margin-top:32px; flex-wrap:wrap; justify-content:center; }
-.btn-gold {
-  background:linear-gradient(135deg,#D4AF37,#f0d060);
-  color:#111; padding:13px 30px; border-radius:30px;
-  text-decoration:none; font-weight:700; font-size:14px;
-}
-.btn-outline {
-  border:1px solid rgba(212,175,55,0.4); color:#D4AF37;
-  padding:13px 30px; border-radius:30px; text-decoration:none; font-size:14px;
-}
+.btn-gold { background:linear-gradient(135deg,#D4AF37,#f0d060); color:#111; padding:13px 30px; border-radius:30px; text-decoration:none; font-weight:700; font-size:14px; }
+.btn-outline { border:1px solid rgba(212,175,55,0.4); color:#D4AF37; padding:13px 30px; border-radius:30px; text-decoration:none; font-size:14px; }
 .hero-stats { display:flex; gap:40px; margin-top:50px; flex-wrap:wrap; justify-content:center; }
 .stat-num { font-size:38px; font-weight:900; color:#D4AF37; text-align:center; }
 .stat-label { font-size:11px; color:#666; text-align:center; letter-spacing:2px; margin-top:4px; }
-
-/* SECTIONS */
 section { padding:80px 24px; }
 .container { max-width:1000px; margin:0 auto; }
 .sep { width:100%; height:1px; background:linear-gradient(90deg,transparent,rgba(212,175,55,0.3),transparent); }
 .stag { color:#D4AF37; font-size:11px; letter-spacing:3px; text-transform:uppercase; margin-bottom:10px; }
 .stitle { font-size:clamp(30px,5vw,48px); font-weight:900; margin-bottom:20px; line-height:1.1; }
 .stitle em { font-style:italic; color:#D4AF37; }
-
-/* ABOUT */
 #about { background:#0f0f1c; }
 .about-text p { font-size:17px; line-height:1.9; color:#bbb; margin-bottom:16px; }
 .values { display:grid; grid-template-columns:1fr 1fr; gap:14px; margin-top:28px; }
-.vcard {
-  background:rgba(212,175,55,0.04); border:1px solid rgba(212,175,55,0.12);
-  border-radius:14px; padding:18px;
-}
-.vcard:hover { background:rgba(212,175,55,0.08); }
+.vcard { background:rgba(212,175,55,0.04); border:1px solid rgba(212,175,55,0.12); border-radius:14px; padding:18px; }
 .vcard .vi { font-size:26px; margin-bottom:6px; }
 .vcard .vt { color:#D4AF37; font-weight:700; font-size:14px; }
 .vcard .vd { font-size:12px; color:#666; margin-top:3px; }
-
-/* GALERIE */
-#galerie { background:#06060f; }
-.galerie-grid {
-  display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin-top:40px;
-}
-.gitem {
-  background:rgba(212,175,55,0.04); border:1px solid rgba(212,175,55,0.1);
-  border-radius:16px; aspect-ratio:1; display:flex;
-  flex-direction:column; align-items:center; justify-content:center;
-  gap:10px; cursor:pointer; transition:all 0.3s;
-}
-.gitem:first-child { grid-column:span 2; aspect-ratio:2/1; }
-.gitem:hover { border-color:rgba(212,175,55,0.4); background:rgba(212,175,55,0.08); }
-.gitem .gi { font-size:40px; }
-.gitem .gl { font-size:10px; color:#D4AF37; letter-spacing:2px; text-transform:uppercase; }
-.galerie-note { text-align:center; color:#555; font-style:italic; font-size:13px; margin-top:18px; }
-
-/* EVENEMENTS */
-#evenements { background:#0f0f1c; }
-.events { display:flex; flex-direction:column; gap:14px; margin-top:40px; }
-.ecard {
-  display:grid; grid-template-columns:70px 1fr auto;
-  gap:20px; align-items:center;
-  background:rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.06);
-  border-radius:18px; padding:20px 24px; transition:all 0.3s;
-}
-.ecard:hover { border-color:rgba(212,175,55,0.2); background:rgba(212,175,55,0.02); }
-.ebox {
-  background:rgba(212,175,55,0.1); border:1px solid rgba(212,175,55,0.2);
-  border-radius:12px; text-align:center; padding:10px 6px;
-}
+#annonces { background:#06060f; }
+.annonces-list { display:flex; flex-direction:column; gap:14px; margin-top:32px; }
+.annonce-card { background:rgba(255,255,255,0.02); border:1px solid rgba(212,175,55,0.1); border-radius:16px; padding:20px 24px; }
+.annonce-titre { font-size:18px; font-weight:700; color:#D4AF37; margin-bottom:8px; }
+.annonce-contenu { font-size:15px; color:#bbb; line-height:1.7; margin-bottom:10px; }
+.annonce-date { font-size:11px; color:#555; }
+.empty-msg { color:#555; font-style:italic; text-align:center; padding:40px; border:1px dashed rgba(212,175,55,0.1); border-radius:16px; }
+#galerie { background:#0f0f1c; }
+.galerie-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; margin-top:32px; }
+.gitem { border-radius:16px; overflow:hidden; aspect-ratio:1; position:relative; background:rgba(212,175,55,0.04); border:1px solid rgba(212,175,55,0.1); }
+.gitem img { width:100%; height:100%; object-fit:cover; }
+.gitem-placeholder { display:flex; flex-direction:column; align-items:center; justify-content:center; height:100%; gap:8px; }
+.gi { font-size:36px; }
+.gl { font-size:10px; color:#D4AF37; letter-spacing:2px; text-transform:uppercase; }
+.gcaption { position:absolute; bottom:0; left:0; right:0; background:rgba(0,0,0,0.75); padding:8px 12px; font-size:12px; color:#fff; }
+.gitem-video { border-radius:16px; overflow:hidden; position:relative; background:#000; border:1px solid rgba(212,175,55,0.1); }
+.gitem-video iframe { width:100%; height:100%; display:block; border:none; }
+.gitem-video .gcaption { position:absolute; bottom:0; left:0; right:0; }
+.video-badge { position:absolute; top:8px; left:8px; background:rgba(212,175,55,0.9); color:#111; font-size:10px; font-weight:700; padding:3px 8px; border-radius:8px; z-index:2; }
+.gtab-btns { display:flex; gap:10px; margin-bottom:16px; }
+.gtab-btn { flex:1; padding:9px; border-radius:10px; border:1px solid rgba(212,175,55,0.2); background:rgba(255,255,255,0.03); color:#888; cursor:pointer; font-family:Georgia,serif; font-size:13px; }
+.gtab-btn.active { background:rgba(212,175,55,0.15); border-color:rgba(212,175,55,0.4); color:#D4AF37; }
+#evenements { background:#06060f; }
+.events { display:flex; flex-direction:column; gap:14px; margin-top:32px; }
+.ecard { display:grid; grid-template-columns:70px 1fr auto; gap:20px; align-items:center; background:rgba(255,255,255,0.02); border:1px solid rgba(255,255,255,0.06); border-radius:18px; padding:20px 24px; }
+.ebox { background:rgba(212,175,55,0.1); border:1px solid rgba(212,175,55,0.2); border-radius:12px; text-align:center; padding:10px 6px; }
 .eday { font-size:26px; font-weight:900; color:#D4AF37; line-height:1; }
 .emon { font-size:10px; color:#666; letter-spacing:1px; text-transform:uppercase; }
 .einfo h3 { font-size:18px; font-weight:700; margin-bottom:5px; }
 .emeta { font-size:12px; color:#666; }
-.ebadge {
-  background:linear-gradient(135deg,#D4AF37,#f0d060);
-  color:#111; font-size:10px; font-weight:700;
-  padding:5px 14px; border-radius:16px; white-space:nowrap;
-}
-
-/* CONTACT */
+.ebadge { background:linear-gradient(135deg,#D4AF37,#f0d060); color:#111; font-size:10px; font-weight:700; padding:5px 14px; border-radius:16px; white-space:nowrap; }
+#membres { background:#0f0f1c; }
+.membres-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:16px; margin-top:32px; }
+.mcard { background:rgba(212,175,55,0.04); border:1px solid rgba(212,175,55,0.1); border-radius:16px; padding:24px 16px; text-align:center; transition:all 0.3s; }
+.mcard:hover { border-color:rgba(212,175,55,0.3); transform:translateY(-4px); }
+.mavatar { width:70px; height:70px; border-radius:50%; background:linear-gradient(135deg,#D4AF37,#b8860b); display:flex; align-items:center; justify-content:center; font-size:24px; font-weight:900; color:#111; margin:0 auto 12px; overflow:hidden; }
+.mavatar img { width:100%; height:100%; object-fit:cover; }
+.mnom { font-weight:700; font-size:15px; margin-bottom:4px; }
+.mrole { font-size:11px; color:#D4AF37; letter-spacing:1px; }
 #contact { background:#06060f; }
 .contact-grid { display:grid; grid-template-columns:1fr 1fr; gap:48px; margin-top:40px; }
 .cinfo h3 { font-size:24px; color:#D4AF37; margin-bottom:12px; }
 .cinfo p { font-size:16px; color:#aaa; line-height:1.8; margin-bottom:24px; }
 .citems { display:flex; flex-direction:column; gap:12px; }
-.citem {
-  display:flex; align-items:center; gap:14px;
-  padding:14px 18px; background:rgba(212,175,55,0.04);
-  border:1px solid rgba(212,175,55,0.1); border-radius:12px;
-  text-decoration:none; color:#e8e8e8; transition:all 0.3s;
-}
+.citem { display:flex; align-items:center; gap:14px; padding:14px 18px; background:rgba(212,175,55,0.04); border:1px solid rgba(212,175,55,0.1); border-radius:12px; text-decoration:none; color:#e8e8e8; transition:all 0.3s; }
 .citem:hover { background:rgba(212,175,55,0.08); border-color:rgba(212,175,55,0.3); }
-.citem .cicon { font-size:22px; }
-.citem .clabel { font-size:10px; color:#666; letter-spacing:1px; text-transform:uppercase; }
-.citem .cval { font-size:14px; font-weight:600; margin-top:2px; }
-
-/* FORM */
-.cform {
-  background:rgba(255,255,255,0.02); border:1px solid rgba(212,175,55,0.12);
-  border-radius:20px; padding:30px;
-}
+.cicon { font-size:22px; }
+.clabel { font-size:10px; color:#666; letter-spacing:1px; text-transform:uppercase; }
+.cval { font-size:14px; font-weight:600; margin-top:2px; }
+.cform { background:rgba(255,255,255,0.02); border:1px solid rgba(212,175,55,0.12); border-radius:20px; padding:30px; }
 .fg { margin-bottom:16px; }
 .fg label { display:block; font-size:10px; letter-spacing:2px; text-transform:uppercase; color:#D4AF37; margin-bottom:6px; }
-.fg input, .fg textarea, .fg select {
-  width:100%; background:rgba(255,255,255,0.04);
-  border:1px solid rgba(255,255,255,0.08); border-radius:10px;
-  padding:12px 14px; color:#e8e8e8; font-size:15px;
-  font-family:Georgia,serif; outline:none; transition:border-color 0.3s; resize:vertical;
-}
-.fg input:focus, .fg textarea:focus, .fg select:focus {
-  border-color:rgba(212,175,55,0.5);
-}
+.fg input, .fg textarea, .fg select { width:100%; background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.08); border-radius:10px; padding:12px 14px; color:#e8e8e8; font-size:15px; font-family:Georgia,serif; outline:none; transition:border-color 0.3s; resize:vertical; }
+.fg input:focus, .fg textarea:focus, .fg select:focus { border-color:rgba(212,175,55,0.5); }
 .fg select option { background:#1a1a2e; }
-.fsub {
-  width:100%; background:linear-gradient(135deg,#D4AF37,#f0d060);
-  color:#111; border:none; padding:14px; border-radius:10px;
-  font-size:14px; font-weight:700; cursor:pointer; font-family:Georgia,serif;
-}
-.fsub:hover { opacity:0.9; }
+.fsub { width:100%; background:linear-gradient(135deg,#D4AF37,#f0d060); color:#111; border:none; padding:14px; border-radius:10px; font-size:14px; font-weight:700; cursor:pointer; font-family:Georgia,serif; }
 .fsuccess { display:none; text-align:center; padding:20px; color:#D4AF37; }
-
-/* FOOTER */
-footer {
-  background:#0f0f1c; border-top:1px solid rgba(212,175,55,0.1);
-  padding:40px 24px; text-align:center;
-}
+footer { background:#0f0f1c; border-top:1px solid rgba(212,175,55,0.1); padding:40px 24px; text-align:center; }
 .flogo { color:#D4AF37; font-size:28px; font-weight:900; letter-spacing:3px; margin-bottom:8px; }
 .fslogan { color:#555; font-style:italic; font-size:15px; margin-bottom:24px; }
 .flinks { display:flex; justify-content:center; gap:20px; flex-wrap:wrap; margin-bottom:20px; }
-.flinks a { color:#555; text-decoration:none; font-size:12px; letter-spacing:1px; }
+.flinks a { color:#555; text-decoration:none; font-size:12px; }
 .flinks a:hover { color:#D4AF37; }
 .fcopy { color:#333; font-size:11px; }
-
-/* MOBILE MENU */
-.mmenu {
-  display:none; position:fixed; inset:0;
-  background:rgba(6,6,15,0.98); z-index:200;
-  flex-direction:column; align-items:center; justify-content:center; gap:28px;
-}
+.mmenu { display:none; position:fixed; inset:0; background:rgba(6,6,15,0.98); z-index:200; flex-direction:column; align-items:center; justify-content:center; gap:28px; }
 .mmenu.open { display:flex; }
-.mmenu a { font-size:28px; color:#e8e8e8; text-decoration:none; }
+.mmenu a { font-size:26px; color:#e8e8e8; text-decoration:none; }
 .mmenu a:hover { color:#D4AF37; }
 .mclose { position:absolute; top:20px; right:20px; background:none; border:none; color:#D4AF37; font-size:36px; cursor:pointer; }
 
-/* RESPONSIVE */
+/* ADMIN */
+#adminBtn { position:fixed; bottom:20px; right:20px; z-index:50; background:linear-gradient(135deg,#D4AF37,#f0d060); color:#111; border:none; border-radius:50%; width:52px; height:52px; font-size:22px; cursor:pointer; box-shadow:0 4px 20px rgba(212,175,55,0.4); }
+.admin-overlay { display:none; position:fixed; inset:0; background:rgba(0,0,0,0.85); z-index:300; overflow-y:auto; padding:20px; }
+.admin-overlay.open { display:block; }
+.admin-panel { max-width:580px; margin:0 auto; background:#0f0f1c; border:1px solid rgba(212,175,55,0.2); border-radius:24px; padding:28px; }
+.admin-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:24px; }
+.admin-title { color:#D4AF37; font-size:20px; font-weight:900; }
+.admin-close { background:none; border:none; color:#888; font-size:28px; cursor:pointer; }
+.admin-login { text-align:center; padding:40px 0; }
+.admin-login h3 { color:#D4AF37; font-size:22px; margin-bottom:24px; }
+.admin-login input { width:100%; background:rgba(255,255,255,0.05); border:1px solid rgba(212,175,55,0.2); border-radius:12px; padding:14px; color:#fff; font-size:16px; text-align:center; outline:none; letter-spacing:4px; margin-bottom:16px; font-family:Georgia,serif; }
+.admin-login button { width:100%; background:linear-gradient(135deg,#D4AF37,#f0d060); color:#111; border:none; padding:14px; border-radius:12px; font-size:15px; font-weight:700; cursor:pointer; font-family:Georgia,serif; }
+.admin-err { color:#ef4444; font-size:13px; margin-top:8px; }
+.admin-tabs { display:flex; gap:8px; margin-bottom:20px; flex-wrap:wrap; }
+.admin-tab { background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.08); color:#888; border-radius:10px; padding:8px 14px; cursor:pointer; font-size:13px; font-family:Georgia,serif; }
+.admin-tab.active { background:rgba(212,175,55,0.15); border-color:rgba(212,175,55,0.4); color:#D4AF37; }
+.af { margin-bottom:14px; }
+.af label { display:block; font-size:11px; color:#D4AF37; letter-spacing:1px; text-transform:uppercase; margin-bottom:5px; }
+.af input, .af textarea, .af select { width:100%; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); border-radius:10px; padding:11px 13px; color:#fff; font-size:14px; font-family:Georgia,serif; outline:none; resize:vertical; }
+.af input:focus, .af textarea:focus { border-color:rgba(212,175,55,0.5); }
+.af select option { background:#1a1a2e; }
+.abtn { background:linear-gradient(135deg,#D4AF37,#f0d060); color:#111; border:none; padding:12px 24px; border-radius:10px; font-size:14px; font-weight:700; cursor:pointer; width:100%; margin-top:8px; font-family:Georgia,serif; }
+.abtn-del { background:rgba(239,68,68,0.15); color:#ef4444; border:1px solid rgba(239,68,68,0.3); border-radius:8px; padding:5px 12px; cursor:pointer; font-size:12px; font-family:Georgia,serif; }
+.admin-list { display:flex; flex-direction:column; gap:10px; margin-top:16px; }
+.admin-item { background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.07); border-radius:12px; padding:14px; display:flex; justify-content:space-between; align-items:flex-start; gap:10px; }
+.admin-item-info { flex:1; }
+.admin-item-title { font-weight:700; font-size:14px; color:#D4AF37; }
+.admin-item-sub { font-size:12px; color:#666; margin-top:3px; }
+.admin-ok { color:#22c55e; font-size:13px; text-align:center; margin-top:10px; font-weight:700; }
+.hint { color:#555; font-size:12px; font-style:italic; margin-top:6px; }
+
 @media(max-width:768px){
   .nav-links { display:none; }
   .hamburger { display:block; }
@@ -196,35 +151,37 @@ footer {
   .ecard { grid-template-columns:60px 1fr; }
   .ebadge { display:none; }
   .contact-grid { grid-template-columns:1fr; }
+  .membres-grid { grid-template-columns:repeat(2,1fr); }
 }
 </style>
 </head>
 <body>
 
-<!-- NAV -->
 <nav>
   <div class="logo">FLIGÔ</div>
   <ul class="nav-links">
     <li><a href="#about">Le Groupe</a></li>
+    <li><a href="#annonces">Annonces</a></li>
     <li><a href="#galerie">Galerie</a></li>
     <li><a href="#evenements">Événements</a></li>
+    <li><a href="#membres">Équipe</a></li>
     <li><a href="#contact">Contact</a></li>
     <li><a href="https://fligo-app.vercel.app" class="btn-nav">Rejoindre</a></li>
   </ul>
   <button class="hamburger" onclick="document.getElementById('mm').classList.add('open')">☰</button>
 </nav>
 
-<!-- MENU MOBILE -->
 <div class="mmenu" id="mm">
   <button class="mclose" onclick="document.getElementById('mm').classList.remove('open')">×</button>
   <a href="#about" onclick="document.getElementById('mm').classList.remove('open')">Le Groupe</a>
+  <a href="#annonces" onclick="document.getElementById('mm').classList.remove('open')">Annonces</a>
   <a href="#galerie" onclick="document.getElementById('mm').classList.remove('open')">Galerie</a>
   <a href="#evenements" onclick="document.getElementById('mm').classList.remove('open')">Événements</a>
+  <a href="#membres" onclick="document.getElementById('mm').classList.remove('open')">Équipe</a>
   <a href="#contact" onclick="document.getElementById('mm').classList.remove('open')">Contact</a>
   <a href="https://fligo-app.vercel.app" style="color:#D4AF37">Rejoindre →</a>
 </div>
 
-<!-- HERO -->
 <section id="hero">
   <div class="hero-tag">🎵 Groupe Musical & Entraide — Bénin</div>
   <h1 class="hero-title"><span class="gold">FLIGÔ</span></h1>
@@ -236,7 +193,7 @@ footer {
     <a href="#about" class="btn-outline">Découvrir →</a>
   </div>
   <div class="hero-stats">
-    <div><div class="stat-num">14+</div><div class="stat-label">Membres</div></div>
+    <div><div class="stat-num" id="nbMembres">14+</div><div class="stat-label">Membres</div></div>
     <div style="border-left:1px solid rgba(212,175,55,0.2);border-right:1px solid rgba(212,175,55,0.2);padding:0 40px">
       <div class="stat-num">100%</div><div class="stat-label">Solidarité</div>
     </div>
@@ -246,7 +203,6 @@ footer {
 
 <div class="sep"></div>
 
-<!-- ABOUT -->
 <section id="about">
   <div class="container">
     <div class="stag">— Qui sommes-nous</div>
@@ -266,52 +222,52 @@ footer {
 
 <div class="sep"></div>
 
-<!-- GALERIE -->
+<section id="annonces">
+  <div class="container">
+    <div class="stag">— Actualités</div>
+    <h2 class="stitle">Nos <em>annonces</em></h2>
+    <div class="annonces-list" id="annoncesList"><div class="empty-msg">Chargement...</div></div>
+  </div>
+</section>
+
+<div class="sep"></div>
+
 <section id="galerie">
   <div class="container">
     <div class="stag">— Nos moments</div>
     <h2 class="stitle">Galerie <em>photos & vidéos</em></h2>
-    <div class="galerie-grid">
-      <div class="gitem"><div class="gi">🎶</div><div class="gl">Scène & Performances</div></div>
-      <div class="gitem"><div class="gi">🎸</div><div class="gl">Studio</div></div>
-      <div class="gitem"><div class="gi">🎤</div><div class="gl">Concerts</div></div>
-      <div class="gitem"><div class="gi">🥁</div><div class="gl">Répétitions</div></div>
-      <div class="gitem"><div class="gi">🎹</div><div class="gl">Événements</div></div>
+    <div class="galerie-grid" id="galerieGrid">
+      <div class="gitem"><div class="gitem-placeholder"><div class="gi">🎶</div><div class="gl">Scène</div></div></div>
+      <div class="gitem"><div class="gitem-placeholder"><div class="gi">🎸</div><div class="gl">Studio</div></div></div>
+      <div class="gitem"><div class="gitem-placeholder"><div class="gi">🎤</div><div class="gl">Concerts</div></div></div>
+      <div class="gitem"><div class="gitem-placeholder"><div class="gi">🥁</div><div class="gl">Répétitions</div></div></div>
+      <div class="gitem"><div class="gitem-placeholder"><div class="gi">🎹</div><div class="gl">Événements</div></div></div>
     </div>
-    <p class="galerie-note">📸 Les photos et vidéos seront ajoutées au fur et à mesure des événements</p>
   </div>
 </section>
 
 <div class="sep"></div>
 
-<!-- EVENEMENTS -->
 <section id="evenements">
   <div class="container">
     <div class="stag">— Agenda</div>
     <h2 class="stitle">Prochains <em>événements</em></h2>
-    <div class="events">
-      <div class="ecard">
-        <div class="ebox"><div class="eday">04</div><div class="emon">Avr</div></div>
-        <div class="einfo"><h3>Collecte Tontine — Avril 2026</h3><div class="emeta">📅 Avant 12h00 &nbsp;|&nbsp; 📍 Via l'application</div></div>
-        <div class="ebadge">Mensuel</div>
-      </div>
-      <div class="ecard">
-        <div class="ebox"><div class="eday">01</div><div class="emon">Avr</div></div>
-        <div class="einfo"><h3>Cotisation Mensuelle — Avril 2026</h3><div class="emeta">💰 500 F CFA &nbsp;|&nbsp; 👥 Tous les membres</div></div>
-        <div class="ebadge">Mensuel</div>
-      </div>
-      <div class="ecard">
-        <div class="ebox"><div class="eday">??</div><div class="emon">2026</div></div>
-        <div class="einfo"><h3>Prochain Concert FLIGÔ</h3><div class="emeta">📍 Bénin &nbsp;|&nbsp; 🎵 À confirmer</div></div>
-        <div class="ebadge">Concert</div>
-      </div>
-    </div>
+    <div class="events" id="eventsList"><div class="empty-msg">Chargement...</div></div>
   </div>
 </section>
 
 <div class="sep"></div>
 
-<!-- CONTACT -->
+<section id="membres">
+  <div class="container">
+    <div class="stag">— Notre équipe</div>
+    <h2 class="stitle">Les <em>membres</em></h2>
+    <div class="membres-grid" id="membresSite"><div class="empty-msg" style="grid-column:1/-1">Chargement...</div></div>
+  </div>
+</section>
+
+<div class="sep"></div>
+
 <section id="contact">
   <div class="container">
     <div class="stag">— Nous rejoindre</div>
@@ -319,15 +275,15 @@ footer {
     <div class="contact-grid">
       <div class="cinfo">
         <h3>Parlons ensemble</h3>
-        <p>Vous souhaitez rejoindre FLIGÔ Don de Dieu ou en savoir plus sur notre groupe ? Contactez-nous directement.</p>
+        <p>Vous souhaitez rejoindre FLIGÔ Don de Dieu ou en savoir plus ? Contactez-nous directement.</p>
         <div class="citems">
           <a href="https://wa.me/2290162015566" class="citem">
             <span class="cicon">💬</span>
             <div><div class="clabel">WhatsApp & Appel</div><div class="cval">+229 01 62 01 55 66</div></div>
           </a>
-          <a href="mailto:fligodondedieu@gmail.com" class="citem">
+          <a href="/cdn-cgi/l/email-protection#11777d78767e757e7f75747578746451767c70787d3f727e7c" class="citem">
             <span class="cicon">✉️</span>
-            <div><div class="clabel">Email</div><div class="cval">fligodondedieu@gmail.com</div></div>
+            <div><div class="clabel">Email</div><div class="cval"><span class="__cf_email__" data-cfemail="56303a3f31393239383233323f332316313b373f3a7835393b">[email&#160;protected]</span></div></div>
           </a>
           <a href="https://fligo-app.vercel.app" class="citem">
             <span class="cicon">📱</span>
@@ -339,15 +295,8 @@ footer {
         <div id="fc">
           <div class="fg"><label>Votre nom</label><input type="text" id="fn" placeholder="Ex : Jean Dupont"></div>
           <div class="fg"><label>Téléphone WhatsApp</label><input type="tel" id="ft" placeholder="+229 ..."></div>
-          <div class="fg">
-            <label>Sujet</label>
-            <select id="fs">
-              <option value="">Choisir...</option>
-              <option>Rejoindre le groupe</option>
-              <option>Informations sur la tontine</option>
-              <option>Partenariat musical</option>
-              <option>Autre</option>
-            </select>
+          <div class="fg"><label>Sujet</label>
+            <select id="fs"><option value="">Choisir...</option><option>Rejoindre le groupe</option><option>Informations sur la tontine</option><option>Partenariat musical</option><option>Autre</option></select>
           </div>
           <div class="fg"><label>Message</label><textarea id="fm" rows="4" placeholder="Votre message..."></textarea></div>
           <button class="fsub" onclick="envoyerContact()">📲 Envoyer via WhatsApp</button>
@@ -355,41 +304,251 @@ footer {
         <div class="fsuccess" id="fok">
           <div style="font-size:48px;margin-bottom:12px">✅</div>
           <div style="font-size:20px;margin-bottom:8px">Message envoyé !</div>
-          <div style="color:#666;font-size:13px">Vous allez être redirigé vers WhatsApp.</div>
+          <div style="color:#666;font-size:13px">Redirection vers WhatsApp...</div>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- FOOTER -->
 <footer>
   <div class="flogo">FLIGÔ</div>
   <div class="fslogan">Don de Dieu — Musique & Entraide</div>
   <div class="flinks">
     <a href="#about">Le Groupe</a>
+    <a href="#annonces">Annonces</a>
     <a href="#galerie">Galerie</a>
     <a href="#evenements">Événements</a>
+    <a href="#membres">Équipe</a>
     <a href="#contact">Contact</a>
     <a href="https://fligo-app.vercel.app">Application</a>
   </div>
   <div class="fcopy">© 2026 FLIGÔ Don de Dieu — Tous droits réservés</div>
 </footer>
 
-<script>
-function envoyerContact() {
-  var nom = document.getElementById('fn').value.trim();
-  var tel = document.getElementById('ft').value.trim();
-  var sujet = document.getElementById('fs').value;
-  var msg = document.getElementById('fm').value.trim();
-  if(!nom || !tel) { alert('Merci de remplir votre nom et téléphone.'); return; }
-  var message = '🎵 *FLIGÔ Don de Dieu — Contact*\n━━━━━━━━━━━━━━━━\n👤 Nom : ' + nom + '\n📱 Téléphone : ' + tel + '\n📋 Sujet : ' + (sujet||'Non précisé') + '\n\n💬 Message :\n' + (msg||'(aucun message)') + '\n━━━━━━━━━━━━━━━━\nEnvoyé depuis le site web';
-  document.getElementById('fok').style.display = 'block';
-  document.getElementById('fc').style.display = 'none';
-  setTimeout(function() {
-    window.open('https://wa.me/2290162015566?text=' + encodeURIComponent(message), '_blank');
-  }, 800);
+<button id="adminBtn" onclick="ouvrirAdmin()" title="Administration">⚙️</button>
+
+<div class="admin-overlay" id="adminOverlay">
+  <div class="admin-panel">
+    <div class="admin-header">
+      <div class="admin-title">⚙️ Administration FLIGÔ</div>
+      <button class="admin-close" onclick="fermerAdmin()">×</button>
+    </div>
+    <div id="adminLogin">
+      <div class="admin-login">
+        <h3>🔐 Accès Admin</h3>
+        <input type="password" id="adminMdp" placeholder="Mot de passe" onkeydown="if(event.key==='Enter')loginAdmin()">
+        <button onclick="loginAdmin()">Entrer</button>
+        <div class="admin-err" id="adminErr"></div>
+      </div>
+    </div>
+    <div id="adminContent" style="display:none">
+      <div class="admin-tabs">
+        <button class="admin-tab active" onclick="adminTab(this,'annonces')">📢 Annonces</button>
+        <button class="admin-tab" onclick="adminTab(this,'galerie')">📸 Galerie</button>
+        <button class="admin-tab" onclick="adminTab(this,'evenements')">📅 Événements</button>
+        <button class="admin-tab" onclick="adminTab(this,'membres')">👥 Membres</button>
+      </div>
+      <div id="tab-annonces">
+        <div class="af"><label>Titre</label><input type="text" id="a-titre" placeholder="Titre de l'annonce"></div>
+        <div class="af"><label>Contenu</label><textarea id="a-contenu" rows="4" placeholder="Contenu de l'annonce..."></textarea></div>
+        <button class="abtn" onclick="ajouterAnnonce()">➕ Publier l'annonce</button>
+        <div class="admin-ok" id="ok-annonce" style="display:none">✅ Annonce publiée !</div>
+        <div class="admin-list" id="admin-annonces-list"></div>
+      </div>
+      <div id="tab-galerie" style="display:none">
+        <div class="gtab-btns">
+          <button class="gtab-btn active" id="gbtn-photo" onclick="switchGalerieType('photo')">📸 Photo</button>
+          <button class="gtab-btn" id="gbtn-video" onclick="switchGalerieType('video')">🎬 Vidéo</button>
+        </div>
+        <div id="gform-photo">
+          <div class="af"><label>Lien de la photo (URL)</label><input type="text" id="g-url" placeholder="https://..."></div>
+          <div class="af"><label>Légende</label><input type="text" id="g-legende" placeholder="Description de la photo"></div>
+          <button class="abtn" onclick="ajouterMedia()">➕ Ajouter la photo</button>
+          <div class="hint">💡 Uploadez sur <strong>imgur.com</strong> depuis votre téléphone et copiez le lien</div>
+        </div>
+        <div id="gform-video" style="display:none">
+          <div class="af"><label>Lien YouTube ou TikTok</label><input type="text" id="g-video-url" placeholder="https://youtu.be/... ou https://www.tiktok.com/..."></div>
+          <div class="af"><label>Légende</label><input type="text" id="g-video-legende" placeholder="Description de la vidéo"></div>
+          <button class="abtn" onclick="ajouterMedia()">➕ Ajouter la vidéo</button>
+          <div class="hint">💡 Sur YouTube : bouton Partager → Copier le lien. Sur TikTok : bouton Partager → Copier le lien</div>
+        </div>
+        <div class="admin-ok" id="ok-galerie" style="display:none">✅ Ajouté !</div>
+        <div class="admin-list" id="admin-galerie-list"></div>
+      </div>
+      <div id="tab-evenements" style="display:none">
+        <div class="af"><label>Titre</label><input type="text" id="e-titre" placeholder="Nom de l'événement"></div>
+        <div class="af"><label>Date</label><input type="date" id="e-date"></div>
+        <div class="af"><label>Lieu</label><input type="text" id="e-lieu" placeholder="Lieu de l'événement"></div>
+        <div class="af"><label>Type</label>
+          <select id="e-type"><option>Concert</option><option>Mensuel</option><option>Réunion</option><option>Autre</option></select>
+        </div>
+        <button class="abtn" onclick="ajouterEvenement()">➕ Ajouter l'événement</button>
+        <div class="admin-ok" id="ok-evenement" style="display:none">✅ Événement ajouté !</div>
+        <div class="admin-list" id="admin-events-list"></div>
+      </div>
+      <div id="tab-membres" style="display:none">
+        <div class="af"><label>Nom complet</label><input type="text" id="m-nom" placeholder="Nom du membre"></div>
+        <div class="af"><label>Rôle / Instrument</label><input type="text" id="m-role" placeholder="Ex: Guitariste, Chanteur..."></div>
+        <div class="af"><label>Photo (URL — optionnel)</label><input type="text" id="m-photo" placeholder="https://..."></div>
+        <button class="abtn" onclick="ajouterMembreSite()">➕ Ajouter le membre</button>
+        <div class="admin-ok" id="ok-membre" style="display:none">✅ Membre ajouté !</div>
+        <div class="admin-list" id="admin-membres-list"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+const firebaseConfig = {
+  apiKey:"AIzaSyD1V3mkkpy0NnLqs7p9F2sgvqiMlLnAOy8",
+  authDomain:"fligo-app.firebaseapp.com",
+  projectId:"fligo-app",
+  storageBucket:"fligo-app.firebasestorage.app",
+  messagingSenderId:"421093082613",
+  appId:"1:421093082613:web:171fc395c06188c3de4cbc"
+};
+firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore();
+const COLS = { annonces:'site_annonces', galerie:'site_galerie', evenements:'site_evenements', membres:'site_membres' };
+const ADMIN_MDP = "Fligo@2025!";
+let adminOk = false;
+
+function fmtDate(iso){ if(!iso) return ''; const d=new Date(iso); return d.toLocaleDateString('fr-FR',{day:'2-digit',month:'short',year:'numeric'}); }
+
+// Annonces publiques
+db.collection(COLS.annonces).orderBy('date','desc').onSnapshot(snap=>{
+  const el=document.getElementById('annoncesList');
+  if(snap.empty){el.innerHTML='<div class="empty-msg">Aucune annonce pour le moment.</div>';return;}
+  el.innerHTML=snap.docs.map(d=>{const a=d.data();return`<div class="annonce-card"><div class="annonce-titre">${a.titre}</div><div class="annonce-contenu">${a.contenu}</div><div class="annonce-date">📅 ${fmtDate(a.date)}</div></div>`;}).join('');
+});
+
+// Galerie publique
+db.collection(COLS.galerie).orderBy('date','desc').onSnapshot(snap=>{
+  const el=document.getElementById('galerieGrid');
+  if(snap.empty) return;
+  el.innerHTML=snap.docs.map((d,i)=>{
+    const g=d.data();
+    if(g.type==='video'){
+      const embedUrl=getEmbedUrl(g.url);
+      const badge=g.url.includes('tiktok')?'TikTok':'YouTube';
+      const badgeColor=g.url.includes('tiktok')?'#010101':'#ff0000';
+      return `<div class="gitem-video" style="aspect-ratio:${i===0?'2/1':'1'}${i===0?';grid-column:span 2':''}">
+        <div class="video-badge" style="background:${badgeColor};color:#fff">▶ ${badge}</div>
+        ${embedUrl?`<iframe src="${embedUrl}" allowfullscreen allow="autoplay"></iframe>`:`<div class="gitem-placeholder" style="height:100%"><div class="gi">🎬</div><div class="gl">${g.legende}</div></div>`}
+        <div class="gcaption">${g.legende}</div>
+      </div>`;
+    }
+    return `<div class="gitem"${i===0?' style="grid-column:span 2"':''}>
+      <img src="${g.url}" alt="${g.legende}" onerror="this.parentNode.innerHTML='<div class=gitem-placeholder style=height:100%><div class=gi>📸</div></div>'">
+      <div class="gcaption">${g.legende}</div>
+    </div>`;
+  }).join('');
+});
+
+function getEmbedUrl(url){
+  // YouTube
+  const ytMatch=url.match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|shorts\/|embed\/))([a-zA-Z0-9_-]{11})/);
+  if(ytMatch) return `https://www.youtube.com/embed/${ytMatch[1]}?rel=0`;
+  // TikTok - embed direct
+  const ttMatch=url.match(/tiktok\.com\/@[^/]+\/video\/(\d+)/);
+  if(ttMatch) return `https://www.tiktok.com/embed/v2/${ttMatch[1]}`;
+  return null;
 }
-</script>
-</body>
-</html>
+
+// Événements publics
+db.collection(COLS.evenements).orderBy('date','asc').onSnapshot(snap=>{
+  const el=document.getElementById('eventsList');
+  if(snap.empty){el.innerHTML='<div class="empty-msg">Aucun événement programmé.</div>';return;}
+  el.innerHTML=snap.docs.map(d=>{const e=d.data();const dt=new Date(e.date);const j=dt.getDate().toString().padStart(2,'0');const m=dt.toLocaleDateString('fr-FR',{month:'short'}).replace('.','');return`<div class="ecard"><div class="ebox"><div class="eday">${j}</div><div class="emon">${m}</div></div><div class="einfo"><h3>${e.titre}</h3><div class="emeta">📍 ${e.lieu}</div></div><div class="ebadge">${e.type}</div></div>`;}).join('');
+});
+
+// Membres publics
+db.collection(COLS.membres).orderBy('date','asc').onSnapshot(snap=>{
+  const el=document.getElementById('membresSite');
+  if(snap.empty){el.innerHTML='<div class="empty-msg" style="grid-column:1/-1">Les membres seront présentés bientôt.</div>';return;}
+  document.getElementById('nbMembres').textContent=snap.size+'+';
+  el.innerHTML=snap.docs.map(d=>{const m=d.data();const init=m.nom.split(' ').map(n=>n[0]).join('').toUpperCase().slice(0,2);return`<div class="mcard"><div class="mavatar">${m.photo?`<img src="${m.photo}" alt="${m.nom}">`:`${init}`}</div><div class="mnom">${m.nom}</div><div class="mrole">${m.role}</div></div>`;}).join('');
+});
+
+// Admin
+function ouvrirAdmin(){ document.getElementById('adminOverlay').classList.add('open'); if(adminOk) chargerListesAdmin(); }
+function fermerAdmin(){ document.getElementById('adminOverlay').classList.remove('open'); }
+function loginAdmin(){
+  if(document.getElementById('adminMdp').value===ADMIN_MDP){
+    adminOk=true;
+    document.getElementById('adminLogin').style.display='none';
+    document.getElementById('adminContent').style.display='block';
+    chargerListesAdmin();
+  } else { document.getElementById('adminErr').textContent='❌ Mot de passe incorrect'; }
+}
+function adminTab(btn, name){
+  document.querySelectorAll('.admin-tab').forEach(t=>t.classList.remove('active'));
+  btn.classList.add('active');
+  ['annonces','galerie','evenements','membres'].forEach(t=>{ document.getElementById('tab-'+t).style.display=t===name?'block':'none'; });
+  chargerListesAdmin();
+}
+function showOk(id){ const el=document.getElementById(id); el.style.display='block'; setTimeout(()=>el.style.display='none',2500); }
+
+function ajouterAnnonce(){
+  const t=document.getElementById('a-titre').value.trim(), c=document.getElementById('a-contenu').value.trim();
+  if(!t||!c){alert('Remplissez le titre et le contenu.');return;}
+  db.collection(COLS.annonces).add({titre:t,contenu:c,date:new Date().toISOString()}).then(()=>{ document.getElementById('a-titre').value=''; document.getElementById('a-contenu').value=''; showOk('ok-annonce'); chargerListesAdmin(); });
+}
+let galerieTypeActif = 'photo';
+function switchGalerieType(type){
+  galerieTypeActif=type;
+  document.getElementById('gform-photo').style.display=type==='photo'?'block':'none';
+  document.getElementById('gform-video').style.display=type==='video'?'block':'none';
+  document.getElementById('gbtn-photo').classList.toggle('active',type==='photo');
+  document.getElementById('gbtn-video').classList.toggle('active',type==='video');
+}
+function ajouterMedia(){
+  if(galerieTypeActif==='photo'){
+    const u=document.getElementById('g-url').value.trim(), l=document.getElementById('g-legende').value.trim();
+    if(!u){alert('Entrez un lien de photo.');return;}
+    db.collection(COLS.galerie).add({type:'photo',url:u,legende:l||'Photo FLIGÔ',date:new Date().toISOString()}).then(()=>{ document.getElementById('g-url').value=''; document.getElementById('g-legende').value=''; showOk('ok-galerie'); chargerListesAdmin(); });
+  } else {
+    const u=document.getElementById('g-video-url').value.trim(), l=document.getElementById('g-video-legende').value.trim();
+    if(!u){alert('Entrez un lien de vidéo.');return;}
+    if(!u.includes('youtube')&&!u.includes('youtu.be')&&!u.includes('tiktok')){alert('Lien YouTube ou TikTok uniquement.');return;}
+    db.collection(COLS.galerie).add({type:'video',url:u,legende:l||'Vidéo FLIGÔ',date:new Date().toISOString()}).then(()=>{ document.getElementById('g-video-url').value=''; document.getElementById('g-video-legende').value=''; showOk('ok-galerie'); chargerListesAdmin(); });
+  }
+}
+function ajouterEvenement(){
+  const t=document.getElementById('e-titre').value.trim(), d=document.getElementById('e-date').value, l=document.getElementById('e-lieu').value.trim(), tp=document.getElementById('e-type').value;
+  if(!t||!d){alert('Remplissez le titre et la date.');return;}
+  db.collection(COLS.evenements).add({titre:t,date:d,lieu:l||'À confirmer',type:tp,createdAt:new Date().toISOString()}).then(()=>{ document.getElementById('e-titre').value=''; document.getElementById('e-date').value=''; document.getElementById('e-lieu').value=''; showOk('ok-evenement'); chargerListesAdmin(); });
+}
+function ajouterMembreSite(){
+  const n=document.getElementById('m-nom').value.trim(), r=document.getElementById('m-role').value.trim(), p=document.getElementById('m-photo').value.trim();
+  if(!n){alert('Entrez le nom du membre.');return;}
+  db.collection(COLS.membres).add({nom:n,role:r||'Membre',photo:p||'',date:new Date().toISOString()}).then(()=>{ document.getElementById('m-nom').value=''; document.getElementById('m-role').value=''; document.getElementById('m-photo').value=''; showOk('ok-membre'); chargerListesAdmin(); });
+}
+function supprimer(col,id){ if(!confirm('Supprimer cet élément ?')) return; db.collection(col).doc(id).delete().then(()=>chargerListesAdmin()); }
+
+function chargerListesAdmin(){
+  db.collection(COLS.annonces).orderBy('date','desc').get().then(snap=>{
+    const el=document.getElementById('admin-annonces-list'); if(!el) return;
+    el.innerHTML=snap.docs.map(d=>{const a=d.data();return`<div class="admin-item"><div class="admin-item-info"><div class="admin-item-title">${a.titre}</div><div class="admin-item-sub">${fmtDate(a.date)}</div></div><button class="abtn-del" onclick="supprimer('${COLS.annonces}','${d.id}')">🗑️</button></div>`;}).join('')||'<div style="color:#555;font-size:13px;text-align:center;padding:12px">Aucune annonce</div>';
+  });
+  db.collection(COLS.galerie).orderBy('date','desc').get().then(snap=>{
+    const el=document.getElementById('admin-galerie-list'); if(!el) return;
+    el.innerHTML=snap.docs.map(d=>{const g=d.data();const ico=g.type==='video'?'🎬':'📸';return`<div class="admin-item"><div class="admin-item-info"><div class="admin-item-title">${ico} ${g.legende}</div><div class="admin-item-sub">${g.type==='video'?'Vidéo':'Photo'} — ${fmtDate(g.date)}</div></div><button class="abtn-del" onclick="supprimer('${COLS.galerie}','${d.id}')">🗑️</button></div>`;}).join('')||'<div style="color:#555;font-size:13px;text-align:center;padding:12px">Aucun média</div>';
+  });
+  db.collection(COLS.evenements).orderBy('date','asc').get().then(snap=>{
+    const el=document.getElementById('admin-events-list'); if(!el) return;
+    el.innerHTML=snap.docs.map(d=>{const e=d.data();return`<div class="admin-item"><div class="admin-item-info"><div class="admin-item-title">${e.titre}</div><div class="admin-item-sub">${fmtDate(e.date)} — ${e.lieu}</div></div><button class="abtn-del" onclick="supprimer('${COLS.evenements}','${d.id}')">🗑️</button></div>`;}).join('')||'<div style="color:#555;font-size:13px;text-align:center;padding:12px">Aucun événement</div>';
+  });
+  db.collection(COLS.membres).orderBy('date','asc').get().then(snap=>{
+    const el=document.getElementById('admin-membres-list'); if(!el) return;
+    el.innerHTML=snap.docs.map(d=>{const m=d.data();return`<div class="admin-item"><div class="admin-item-info"><div class="admin-item-title">${m.nom}</div><div class="admin-item-sub">${m.role}</div></div><button class="abtn-del" onclick="supprimer('${COLS.membres}','${d.id}')">🗑️</button></div>`;}).join('')||'<div style="color:#555;font-size:13px;text-align:center;padding:12px">Aucun membre</div>';
+  });
+}
+
+function envoyerContact(){
+  var n=document.getElementById('fn').value.trim(), t=document.getElementById('ft').value.trim(), s=document.getElementById('fs').value, m=document.getElementById('fm').value.trim();
+  if(!n||!t){alert('Merci de remplir votre nom et téléphone.');return;}
+  var msg='🎵 *FLIGÔ Don de Dieu — Contact*\n━━━━━━━━━━━━━━━━\n👤 Nom : '+n+'\n📱 Téléphone : '+t+'\n📋 Sujet : '+(s||'Non précisé')+'\n\n💬 Message :\n'+(m||'(aucun message)')+'\n━━━━━━━━━━━━━━━━\nEnvoyé depuis le site web';
+  document.getElementById('fok').style.display='block'; document.getElementById('fc').style.display='none';
+  setTim
